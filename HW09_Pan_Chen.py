@@ -47,13 +47,13 @@ class Repository:
                     course_numbers[grade[1]] += 1
             self.instructors[j[0]] = Instructor(j[0], j[1], j[2], course_numbers)
 
-        for i in majors:
-            if i[0] not in self.majors:
-                self.majors[i[0]] = Major(i[0])
-            if i[1] == 'R':
-                self.majors[i[0]].req_courses.append(i[2])
+        for k in majors:
+            if k[0] not in self.majors:
+                self.majors[k[0]] = Major(k[0])
+            if k[1] == 'R':
+                self.majors[k[0]].req_courses.append(k[2])
             else:
-                self.majors[i[0]].ele_courses.append(i[2])
+                self.majors[k[0]].ele_courses.append(k[2])
 
 
 def read_file(file_path, pattern):
@@ -99,11 +99,12 @@ def main():
                 for course, grade in student.course_grade.items():
                     if grade in valid_grade:
                         com_courses.append(course)
+
+                remain_req_courses = stevens.majors[student.major].req_courses.copy()
+                remain_ele_courses = stevens.majors[student.major].ele_courses.copy()
                 for com_course in com_courses:
-                    remain_req_courses = stevens.majors[student.major].req_courses.copy()
                     if com_course in remain_req_courses:
                         remain_req_courses.remove(com_course)
-                    remain_ele_courses = stevens.majors[student.major].ele_courses.copy()
                     if com_course in remain_ele_courses:
                         remain_ele_courses = []
 
